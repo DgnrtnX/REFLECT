@@ -1,5 +1,5 @@
 export CORE_PEER_TLS_ENABLED=true
-export ORDERER_CA=$GOPATH/src/github.com/Reflect/backend/hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+export ORDERER_CA=$GOPATH/src/github.com/Reflect/backend/hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 export PEER0_ORG1_CA=$GOPATH/src/github.com/Reflect/backend/hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 export PEER0_ORG2_CA=$GOPATH/src/github.com/Reflect/backend/hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 export FABRIC_CFG_PATH=$GOPATH/src/github.com/Reflect/backend/docker/
@@ -38,12 +38,12 @@ setGlobalsForPeer1Org2(){
 }
 
 createChannel(){
-    # rm -rf ../hyperledger/crypto-config/*
+    # rm -rf ../artifacts/*
     setGlobalsForPeer0Org1
     
     peer channel create -o localhost:7050 -c $CHANNEL_NAME \
-    --ordererTLSHostnameOverride orderer.example.com \
-    -f ../docker/${CHANNEL_NAME}.tx --outputBlock ../hyperledger/transactions/${CHANNEL_NAME}.block \
+    --ordererTLSHostnameOverride orderer1.example.com \
+    -f ../hyperledger/transactions/${CHANNEL_NAME}.tx --outputBlock ../artifacts/${CHANNEL_NAME}.block \
     --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
 }
 
@@ -65,13 +65,17 @@ joinChannel(){
 
 updateAnchorPeers(){
     setGlobalsForPeer0Org1
-    peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer1.example.com -c $CHANNEL_NAME -f ../hyperledger/transactions/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
+    peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer1.example.com \
+    -c $CHANNEL_NAME -f ../hyperledger/transactions/${CORE_PEER_LOCALMSPID}anchors.tx \
+    --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
     
     setGlobalsForPeer0Org2
-    peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer1.example.com -c $CHANNEL_NAME -f ../hyperledger/transactions/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
+    peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer1.example.com \
+    -c $CHANNEL_NAME -f ../hyperledger/transactions/${CORE_PEER_LOCALMSPID}anchors.tx \
+    --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
     
 }
 
 createChannel
-# joinChannel
-# updateAnchorPeers
+joinChannel
+updateAnchorPeers
