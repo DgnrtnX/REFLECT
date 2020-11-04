@@ -10,18 +10,18 @@ OrdererOrgs:
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
     Specs:
-      - Hostname: orderer1
-        # SANS:
-        #     - "localhost"
-        #     - "127.0.0.1"
-      # - Hostname: orderer2
-      #   SANS:
-      #     - "localhost"
-      #     - "127.0.0.1"
-      # - Hostname: orderer3
-      #   SANS:
-      #       - "localhost"
-      #       - "127.0.0.1"
+      - Hostname: orderer
+        SANS:
+            - "localhost"
+            - "127.0.0.1"
+      - Hostname: orderer2
+        SANS:
+          - "localhost"
+          - "127.0.0.1"
+      - Hostname: orderer3
+        SANS:
+            - "localhost"
+            - "127.0.0.1"
 
 # ---------------------------------------------------------------------------
 # "PeerOrgs" - Definition of organizations managing peer nodes
@@ -33,27 +33,27 @@ PeerOrgs:
   - Name: Org1
     Domain: org1.example.com
     EnableNodeOUs: true
-
+  
     Template:
       Count: 2
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
       SANS:
         - "localhost"
-
+  
     Users:
       Count: 1
-
+  
   - Name: Org2
     Domain: org2.example.com
     EnableNodeOUs: true
-
+  
     Template:
       Count: 2
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
       SANS:
         - "localhost"
-
+  
     Users:
-      Count: 2
+      Count: 1
