@@ -1,35 +1,37 @@
-channelName="newChannel"
+SYS_CHANNEL="sys-channel"
+CHANNEL_NAME="mychannel"
+
+chmod -R u+x ../../*
+
 # Delete existing artifacts
-# (cd ../hyperledger/crypto-config/ && chmod u+x *)
-rm -rf ../hyperledger/crypto-config/*
-# rm genesis.block $channelName.tx
+rm -rf ../hyperledger/crypto-config/
+rm genesis.block $CHANNEL_NAME.tx
+rm -rf ../hyperledger/transactions/*
 
 #Generate Crypto artifactes for organizations
-cryptogen generate --config=crypto-config.yml --output=../hyperledger/crypto-config/
+cryptogen generate --config=./crypto-config.yaml --output=./crypto-config/
 
-# channel name defaults to "$channelName"
-echo "---------------------"
-echo "connecting " $channelName
-echo "---------------------"
+echo "-----------------"
+echo "connecting " $CHANNEL_NAME
+echo "-----------------"
 
+# Generate System Genesis block
+echo
+echo "generating genesis block"
+echo
+configtxgen -profile OrdererGenesis -configPath . -channelID $SYS_CHANNEL  -outputBlock ./genesis.block
 
-##########################
-#Errors for comands below
-#Try to debug the issue
-#and uncomment the single commented lines
-###########################
+# Generate channel configuration block
+echo
+echo "generating channel transaction"
+configtxgen -profile BasicChannel -configPath . -outputCreateChannelTx ./$CHANNEL_NAME.tx -channelID $CHANNEL_NAME
 
-# # Generate System Genesis block
-# echo "Creating genesis block"
+echo
+echo "----------  Generating anchor peer update for Org1MSP  ----------"
+echo
+configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ./Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
 
-# configtxgen -profile OrdererGenesis -configPath . -channelID sys-channel  -outputBlock genesis.block
-
-# # Generate channel configuration block
-# echo "Creating transactions "
-# configtxgen -profile BasicChannel -configPath . -outputCreateChannelTx ../hyperledger/transactions/newChannel.tx -channelID $channelName
-
-# echo "#######    Generating anchor peer update for Org1    ##########"
-# configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ../hyperledger/transactions/Org1MSPanchors.tx -channelID $channelName -asOrg Org1MSP
-
-# echo "#######    Generating anchor peer update for Org2    ##########"
-# configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ../hyperledger/transactions/Org2MSPanchors.tx -channelID $channelName -asOrg Org2MSP
+echo
+echo "----------  Generating anchor peer update for Org2MSP  ----------"
+echo
+configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ./Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
