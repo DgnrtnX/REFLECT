@@ -1,50 +1,50 @@
-version: "2"
+version: "2.1"
 
 networks:
-  test:
+  Reflect:
 
 services:
-  ca-org1:
-    image: hyperledger/fabric-ca:1.4.9
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "7054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.org1.example.com
-    hostname: ca.org1.example.com
-    networks:
-      - test
+  # ca-org1:
+  #   image: hyperledger/fabric-ca:1.4.9
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "7054:7054"
+  #   command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: ca.org1.example.com
+  #   hostname: ca.org1.example.com
+  #   networks:
+  #     - Reflect
 
-  ca-org2:
-    image: hyperledger/fabric-ca:1.4.9
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca.org2.example.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
-      - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
-    ports:
-      - "8054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
-    volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
-    container_name: ca.org2.example.com
-    hostname: ca.org2.example.com
-    networks:
-      - test
+  # ca-org2:
+  #   image: hyperledger/fabric-ca:1.4.9
+  #   environment:
+  #     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  #     - FABRIC_CA_SERVER_CA_NAME=ca.org2.example.com
+  #     - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+  #     - FABRIC_CA_SERVER_TLS_ENABLED=true
+  #     - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
+  #     - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+  #   ports:
+  #     - "8054:7054"
+  #   command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+  #   volumes:
+  #     - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  #     - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+  #   container_name: ca.org2.example.com
+  #   hostname: ca.org2.example.com
+  #   networks:
+  #     - Reflect
 
   orderer.example.com:
     container_name: orderer.example.com
@@ -75,7 +75,7 @@ services:
       - 7050:7050
       - 8443:8443
     networks:
-      - test
+      - Reflect
     volumes:
       - ./genesis.block:/var/hyperledger/orderer/genesis.block
       - ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
@@ -110,7 +110,7 @@ services:
       - 8050:8050
       - 8444:8443
     networks:
-      - test
+      - Reflect
     volumes:
       - ./genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp:/var/hyperledger/orderer/msp
@@ -145,7 +145,7 @@ services:
       - 9050:9050
       - 8445:8443
     networks:
-      - test
+      - Reflect
     volumes:
       - ./genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/msp:/var/hyperledger/orderer/msp
@@ -160,7 +160,7 @@ services:
     ports:
       - 5984:5984
     networks:
-      - test
+      - Reflect
 
   couchdb1:
     container_name: couchdb1
@@ -171,7 +171,7 @@ services:
     ports:
       - 6984:5984
     networks:
-      - test
+      - Reflect
 
   couchdb2:
     container_name: couchdb2
@@ -182,7 +182,7 @@ services:
     ports:
       - 7984:5984
     networks:
-      - test
+      - Reflect
 
   couchdb3:
     container_name: couchdb3
@@ -193,7 +193,7 @@ services:
     ports:
       - 8984:5984
     networks:
-      - test
+      - Reflect
 
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
@@ -205,7 +205,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=DEBUG
       - CORE_PEER_LOCALMSPID=Org1MSP
 
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Reflect_Test
 
       - CORE_PEER_ID=peer0.org1.example.com
       - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
@@ -237,7 +237,7 @@ services:
       - /var/run/:/host/var/run/
       - ./:/etc/hyperledger/channel/
     networks:
-      - test
+      - Reflect
 
   peer1.org1.example.com:
     container_name: peer1.org1.example.com
@@ -249,7 +249,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - CORE_PEER_LOCALMSPID=Org1MSP
 
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Reflect_Test
 
       - CORE_PEER_ID=peer1.org1.example.com
       - CORE_PEER_ADDRESS=peer1.org1.example.com:8051
@@ -279,7 +279,7 @@ services:
       - /var/run/:/host/var/run/
       - ./:/etc/hyperledger/channel/
     networks:
-      - test
+      - Reflect
 
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
@@ -291,7 +291,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - CORE_PEER_LOCALMSPID=Org2MSP
 
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Reflect_Test
 
       - CORE_PEER_ID=peer0.org2.example.com
       - CORE_PEER_ADDRESS=peer0.org2.example.com:9051
@@ -321,7 +321,7 @@ services:
       - /var/run/:/host/var/run/
       - ./:/etc/hyperledger/channel/
     networks:
-      - test
+      - Reflect
 
   peer1.org2.example.com:
     container_name: peer1.org2.example.com
@@ -333,7 +333,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - CORE_PEER_LOCALMSPID=Org2MSP
 
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=artifacts_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=Reflect_Test
 
       - CORE_PEER_ID=peer1.org2.example.com
       - CORE_PEER_ADDRESS=peer1.org2.example.com:10051
@@ -363,4 +363,4 @@ services:
       - /var/run/:/host/var/run/
       - ./:/etc/hyperledger/channel/
     networks:
-      - test
+      - Reflect

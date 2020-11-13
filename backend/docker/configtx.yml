@@ -334,20 +334,11 @@ Profiles:
                   Port: 9050
                   ClientTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
                   ServerTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
-                # - Host: orderer4.example.com
-                #   Port: 10050
-                #   ClientTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
-                #   ServerTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/server.crt
-                # - Host: orderer5.example.com
-                #   Port: 11050
-                #   ClientTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
-                #   ServerTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/server.crt
+               
             Addresses:
                 - orderer.example.com:7050
                 - orderer2.example.com:8050
                 - orderer3.example.com:9050
-                # - orderer4.example.com:10050
-                # - orderer5.example.com:11050
 
             Organizations:
             - *OrdererOrg

@@ -1,14 +1,13 @@
 SYS_CHANNEL="sys-channel"
-CHANNEL_NAME="newChannel"
+CHANNEL_NAME="newchannel"
 
-chmod -R 0755 ../*
-
-# Delete existing artifacts
+# Uncomment the following line if not using ca certificate to generate certificate
 rm -rf ../hyperledger/crypto-config/*
 rm genesis.block $CHANNEL_NAME.tx
 rm -rf ../hyperledger/transactions/*
 
-#Generate Crypto artifactes for organizations
+#Line is commented to use ca certificates
+#Uncomment the following line if using cryptogen tool
 cryptogen generate --config=./crypto-config.yml --output=../hyperledger/crypto-config/
 
 # Generate System Genesis block
