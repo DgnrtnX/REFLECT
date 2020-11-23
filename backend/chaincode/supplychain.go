@@ -35,12 +35,12 @@ type HistoryQuery struct {
 // NOTE: don't use Init function as it is defined in fabric sdk
 func (sc *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
-		{ID: "asset1", Owner: "Tomoko", AssetType: "household", Quantity: 10, AppraisedValue: 300},
-		{ID: "asset2", Owner: "Brad", AssetType: "industry", Quantity: 6, AppraisedValue: 400},
-		{ID: "asset3", Owner: "Jin Soo", AssetType: "industry", Quantity: 18, AppraisedValue: 500},
-		{ID: "asset4", Owner: "Max", AssetType: "household", Quantity: 2, AppraisedValue: 600},
-		{ID: "asset5", Owner: "Adriana", AssetType: "mines", Quantity: 26, AppraisedValue: 70},
-		{ID: "asset6", Owner: "Michel", AssetType: "mines", Quantity: 8, AppraisedValue: 800},
+		{ID: "Cupset", Owner: "Tomoko", AssetType: "Household", Quantity: 10, AppraisedValue: 300},
+		{ID: "Drill Machine", Owner: "Brad", AssetType: "Industry", Quantity: 6, AppraisedValue: 2000},
+		{ID: "GPU", Owner: "Jin Soo", AssetType: "Electronics", Quantity: 18, AppraisedValue: 500},
+		{ID: "Car", Owner: "Max", AssetType: "Heavy", Quantity: 2, AppraisedValue: 26000},
+		{ID: "Chair", Owner: "Adriana", AssetType: "Household", Quantity: 26, AppraisedValue: 75},
+		{ID: "Medicines", Owner: "Michel", AssetType: "Fragile", Quantity: 8, AppraisedValue: 10},
 	}
 
 	for _, asset := range assets {
