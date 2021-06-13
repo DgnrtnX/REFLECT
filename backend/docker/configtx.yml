@@ -334,7 +334,6 @@ Profiles:
                   Port: 9050
                   ClientTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
                   ServerTLSCert: ../hyperledger/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
-               
             Addresses:
                 - orderer.example.com:7050
                 - orderer2.example.com:8050

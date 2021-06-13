@@ -7,19 +7,19 @@ services:
   ca-org1:
     image: hyperledger/fabric-ca
     environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_HOME=/var/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+      - FABRIC_CA_SERVER_CA_CERTFILE=/var/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/var/hyperledger/fabric-ca-server-config/priv_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/var/hyperledger/fabric-ca-server-tls/tlsca.org1.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/var/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
       - "7054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/ca/:/var/hyperledger/fabric-ca-server-config
+      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/tlsca/:/var/hyperledger/fabric-ca-server-tls
     container_name: ca.org1.example.com
     hostname: ca.org1.example.com
     networks:
@@ -28,19 +28,19 @@ services:
   ca-org2:
     image: hyperledger/fabric-ca
     environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_HOME=/var/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.org2.example.com
-      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/priv_sk
+      - FABRIC_CA_SERVER_CA_CERTFILE=/var/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/var/hyperledger/fabric-ca-server-config/priv_sk
       - FABRIC_CA_SERVER_TLS_ENABLED=true
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-tls/priv_sk
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/var/hyperledger/fabric-ca-server-tls/tlsca.org2.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/var/hyperledger/fabric-ca-server-tls/priv_sk
     ports:
       - "8054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/tlsca/:/etc/hyperledger/fabric-ca-server-tls
+      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/ca/:/var/hyperledger/fabric-ca-server-config
+      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/tlsca/:/var/hyperledger/fabric-ca-server-tls
     container_name: ca.org2.example.com
     hostname: ca.org2.example.com
     networks:
@@ -69,7 +69,7 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=7050
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
     command: orderer
     ports:
       - 7050:7050
@@ -104,7 +104,7 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=8050
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
     command: orderer
     ports:
       - 8050:8050
@@ -139,7 +139,7 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=9050
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
     command: orderer
     ports:
       - 9050:9050
@@ -181,19 +181,19 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
       - CORE_METRICS_PROVIDER=prometheus
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
+      - CORE_PEER_TLS_CERT_FILE=/var/hyperledger/crypto/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/var/hyperledger/crypto/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/var/hyperledger/crypto/peer/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/var/hyperledger/crypto/peer/msp
     depends_on:
       - couchdb0
     ports:
       - 7051:7051
     volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/var/hyperledger/crypto/peer/msp
+      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/var/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
-      - ../hyperledger/transactions/:/etc/hyperledger/channel/
+      - ../hyperledger/transactions/:/var/hyperledger/channel/
     networks:
       - reflect
 
@@ -225,17 +225,17 @@ services:
       - CORE_METRICS_PROVIDER=prometheus
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
+      - CORE_PEER_TLS_CERT_FILE=/var/hyperledger/crypto/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/var/hyperledger/crypto/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/var/hyperledger/crypto/peer/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/var/hyperledger/crypto/peer/msp
     ports:
       - 8051:8051
     volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/var/hyperledger/crypto/peer/msp
+      - ../hyperledger/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/var/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
-      - ../hyperledger/transactions/:/etc/hyperledger/channel/
+      - ../hyperledger/transactions/:/var/hyperledger/channel/
     networks:
       - reflect
 
@@ -267,17 +267,17 @@ services:
       - CORE_METRICS_PROVIDER=prometheus
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
+      - CORE_PEER_TLS_CERT_FILE=/var/hyperledger/crypto/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/var/hyperledger/crypto/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/var/hyperledger/crypto/peer/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/var/hyperledger/crypto/peer/msp
     ports:
       - 9051:9051
     volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/var/hyperledger/crypto/peer/msp
+      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/var/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
-      - ../hyperledger/transactions/:/etc/hyperledger/channel/
+      - ../hyperledger/transactions/:/var/hyperledger/channel/
     networks:
       - reflect
 
@@ -309,17 +309,17 @@ services:
       - CORE_METRICS_PROVIDER=prometheus
       # - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:9440
       - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
+      - CORE_PEER_TLS_CERT_FILE=/var/hyperledger/crypto/peer/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/var/hyperledger/crypto/peer/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/var/hyperledger/crypto/peer/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/var/hyperledger/crypto/peer/msp
     ports:
       - 10051:10051
     volumes:
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/crypto/peer/msp
-      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/crypto/peer/tls
+      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/var/hyperledger/crypto/peer/msp
+      - ../hyperledger/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/var/hyperledger/crypto/peer/tls
       - /var/run/:/host/var/run/
-      - ../hyperledger/transactions/:/etc/hyperledger/channel/
+      - ../hyperledger/transactions/:/var/hyperledger/channel/
     networks:
       - reflect
 

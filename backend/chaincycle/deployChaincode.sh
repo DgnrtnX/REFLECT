@@ -30,10 +30,10 @@ setGlobalsForPeer1Org1() {
 }
 
 setGlobalsForPeer0Org2() {
-    export CORE_PEER_LOCALMSPID="Org2MSP"
+ export CORE_PEER_LOCALMSPID="Org2MSP"
     export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
     export CORE_PEER_MSPCONFIGPATH=$REFLECT/hyperledger/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
-    export CORE_PEER_ADDRESS=localhost:9051
+    export CORE_PEER_ADDRESS=localhost:9051   
 
 }
 
@@ -165,8 +165,9 @@ queryCommitted() {
 
 chaincodeInvokeInit() {
     setGlobalsForPeer0Org1
-    peer chaincode invoke -o localhost:7050 \
-    -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["InitLedger"]}'
+    # peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["InitLedger"]}'
+    peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --isInit -c '{"Args":["InitLedger"]}' >&log.txt
+
 }
 
 # chaincodeInvokeInit
@@ -180,9 +181,7 @@ chaincodeInvoke() {
 chaincodeQuery() {
     setGlobalsForPeer0Org2
 
-    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["ReadAsset","GPU"]}'
-    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["GetAssetsByOwner","Jin Soo"]}'
-    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["GetAllAssets"]}'
+    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["QueryAllAssets"]}' >&log.txt
 }
 
 # chaincodeQuery
